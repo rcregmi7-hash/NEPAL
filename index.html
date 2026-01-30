@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="ja" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MR.RC | Web Designer Portfolio</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;500;700;900&display=swap" rel="stylesheet">
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- GSAP for Animations -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/ScrollTrigger.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: '#E74C3C',
+                        dark: '#2C3E50',
+                        light: '#ECF0F1',
+                    },
+                    fontFamily: {
+                        sans: ['Noto Sans JP', 'sans-serif'],
+                    },
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Noto Sans JP', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .dark .glass { background: rgba(15, 23, 42, 0.8); }
+        .reveal { opacity: 0; transform: translateY(30px); transition: all 0.8s ease-out; }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+        .float-animation { animation: float 6s ease-in-out infinite; }
+    </style>
+</head>
+<body class="bg-light dark:bg-slate-950 text-dark dark:text-slate-200 transition-colors duration-500 overflow-x-hidden">
+
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6">
+        <div class="max-w-7xl mx-auto px-6 flex justify-between items-center">
+            <a href="#" class="text-2xl font-black tracking-tighter">
+                MR.<span class="text-brand">RC</span>
+            </a>
+
+            <div class="hidden md:flex items-center space-x-10">
+                <div class="flex space-x-8 text-sm font-bold uppercase tracking-widest">
+                    <a href="#home" class="hover:text-brand transition-colors">Home</a>
+                    <a href="#about" class="hover:text-brand transition-colors">About</a>
+                    <a href="#contact" class="hover:text-brand transition-colors">Contact</a>
+                </div>
+                <button id="theme-toggle" class="p-2.5 rounded-xl bg-gray-200/50 dark:bg-slate-800/50 text-dark dark:text-yellow-400 hover:scale-110 transition-transform">
+                    <i data-lucide="moon" id="moon-icon"></i>
+                    <i data-lucide="sun" id="sun-icon" class="hidden"></i>
+                </button>
+            </div>
+
+            <button class="md:hidden p-2" id="menu-btn">
+                <i data-lucide="menu" size="28"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Mobile Menu Overlay -->
+    <div id="mobile-menu" class="fixed inset-0 z-[60] bg-white dark:bg-slate-900 flex flex-col items-center justify-center space-y-8 transform -translate-y-full transition-transform duration-500">
+        <button class="absolute top-6 right-6" id="close-menu">
+            <i data-lucide="x" size="32"></i>
+        </button>
+        <a href="#home" class="text-4xl font-black uppercase">Home</a>
+        <a href="#about" class="text-4xl font-black uppercase">About</a>
+        <a href="#contact" class="text-4xl font-black uppercase">Contact</a>
+    </div>
+
+    <!-- Hero Section -->
+    <section id="home" class="relative min-h-screen flex items-center pt-20">
+        <div class="absolute inset-0 z-0 pointer-events-none">
+            <div class="absolute top-1/4 -right-20 w-96 h-96 bg-brand/10 rounded-full blur-[100px]"></div>
+            <div class="absolute bottom-1/4 -left-20 w-96 h-96 bg-dark/10 rounded-full blur-[100px]"></div>
+        </div>
+
+        <div class="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-center relative z-10">
+            <div class="hero-content">
+                <span class="inline-block px-4 py-1.5 bg-brand/10 text-brand text-xs font-bold uppercase tracking-[0.2em] rounded-full border border-brand/20 mb-6">
+                    Global Web Designer
+                </span>
+                <h1 class="text-6xl md:text-8xl font-black leading-[1] text-dark dark:text-white tracking-tighter mb-8">
+                    Colors <span class="text-brand">Logic</span>,<br />
+                    Designs <span class="text-brand">Magic</span>.
+                </h1>
+                <p class="text-xl md:text-2xl leading-snug font-medium text-slate-600 dark:text-slate-400 max-w-xl mb-10">
+                    JLPT N1の日本語能力と確かなIT技術で、<br />
+                    企業の思いを<span class="text-dark dark:text-white font-bold border-b-4 border-brand/30">「伝わる」</span>形に。
+                </p>
+                <div class="flex flex-wrap gap-5">
+                    <button class="px-10 py-5 bg-brand text-white font-bold rounded-2xl hover:shadow-2xl hover:-translate-y-1 transition-all flex items-center">
+                        実績を見る <i data-lucide="arrow-right" class="ml-2"></i>
+                    </button>
+                    <a href="#contact" class="px-10 py-5 border-2 border-dark dark:border-slate-700 font-bold rounded-2xl hover:bg-dark hover:text-white dark:hover:bg-white dark:hover:text-dark transition-all">
+                        お問い合わせ
+                    </a>
+                </div>
+            </div>
+
+            <div class="relative hero-image flex justify-center">
+               <div class="relative z-10 w-full max-w-[500px] aspect-[4/5] bg-slate-200 dark:bg-slate-800 rounded-[3rem] overflow-hidden shadow-2xl">
+                 <img 
+                    src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&q=80&w=1200" 
+                    alt="デザイナーの作業風景" 
+                    class="w-full h-full object-cover"
+                 />
+                 <div class="absolute bottom-10 left-10 right-10 flex justify-between items-end">
+                    <div class="text-white">
+                      <p class="text-xs font-bold uppercase tracking-widest text-brand mb-1">Focus</p>
+                      <p class="text-2xl font-black">User Experience</p>
+                    </div>
+                 </div>
+               </div>
+               <div class="absolute -top-10 -left-10 w-40 h-40 border-[12px] border-brand rounded-full opacity-20 float-animation"></div>
+               <div class="absolute -bottom-12 -right-12 w-64 h-64 bg-dark rounded-[4rem] -z-10 opacity-30"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- About Section -->
+    <section id="about" class="py-32 bg-white dark:bg-slate-950 transition-colors">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="flex flex-col lg:flex-row gap-20 items-center">
+                <div class="lg:w-2/5 reveal">
+                    <div class="relative">
+                        <div class="absolute -inset-4 bg-brand rounded-[2.5rem] rotate-3 -z-10 opacity-20"></div>
+                        <img 
+                            src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix&backgroundColor=b6e3f4" 
+                            alt="MR.RC ポートレート" 
+                            class="w-full max-w-[400px] mx-auto rounded-[2rem] border-4 border-white dark:border-slate-800 shadow-2xl"
+                        />
+                    </div>
+                </div>
+
+                <div class="lg:w-3/5 space-y-10 reveal">
+                    <h2 class="text-4xl md:text-5xl font-black leading-tight">
+                        WEBデザイナーの<br />
+                        <span class="text-brand">MR.RC</span> です。
+                    </h2>
+                    <p class="text-lg text-slate-600 dark:text-slate-400 leading-relaxed">
+                        栃木県の<span class="font-bold text-dark dark:text-white">TBC学院</span>でWEBデザインを専攻。
+                        言語の壁、文化の壁を超えて、誰もが使いやすく感動するデジタル体験を創造することを使命としています。
+                    </p>
+
+                    <div class="grid sm:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="font-black text-xl flex items-center border-b-2 border-slate-100 dark:border-slate-800 pb-2 mb-4">
+                                <i data-lucide="globe" class="mr-3 text-brand"></i> Language Power
+                            </h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs font-bold">日本語 (JLPT N1)</span>
+                                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs font-bold">English (Fluent)</span>
+                                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs font-bold">Spanish (Native)</span>
+                                <span class="px-3 py-1 bg-slate-100 dark:bg-slate-900 rounded-lg text-xs font-bold">Nepali (Native)</span>
+                            </div>
+                        </div>
+                        <div class="bg-dark p-6 rounded-2xl text-white">
+                            <p class="italic">"多言語スキルを武器に、InternationalなWEB展開をサポートします。"</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact" class="py-32 bg-light dark:bg-slate-900">
+        <div class="max-w-7xl mx-auto px-6">
+            <div class="bg-dark rounded-[4rem] overflow-hidden shadow-3xl grid lg:grid-cols-2 reveal">
+                <div class="p-12 md:p-20 text-white space-y-8">
+                    <h3 class="text-5xl font-black">Let's craft your vision.</h3>
+                    <p class="text-xl opacity-70">新規プロジェクト、お見積りなどお気軽にご相談ください。</p>
+                    <div class="space-y-6 pt-10">
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="twitter" class="text-brand"></i>
+                            <span>@mr_rc_design</span>
+                        </div>
+                        <div class="flex items-center space-x-4">
+                            <i data-lucide="instagram" class="text-brand"></i>
+                            <span>@mr_rc_creatives</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-12 md:p-20 bg-white dark:bg-slate-950">
+                    <form class="space-y-6">
+                        <input type="text" placeholder="お名前" class="w-full bg-slate-50 dark:bg-slate-800 rounded-xl p-4 outline-none focus:ring-2 focus:ring-brand dark:text-white">
+                        <input type="email" placeholder="メールアドレス" class="w-full bg-slate-50 dark:bg-slate-800 rounded-xl p-4 outline-none focus:ring-2 focus:ring-brand dark:text-white">
+                        <textarea rows="4" placeholder="メッセージ" class="w-full bg-slate-50 dark:bg-slate-800 rounded-xl p-4 outline-none focus:ring-2 focus:ring-brand dark:text-white resize-none"></textarea>
+                        <button type="submit" class="w-full py-4 bg-brand text-white font-black rounded-xl hover:opacity-90 transition-opacity flex justify-center items-center">
+                            送信する <i data-lucide="send" class="ml-2" size="18"></i>
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-12 border-t border-slate-200 dark:border-slate-800">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-6">
+            <div class="text-xl font-black">MR.<span class="text-brand">RC</span></div>
+            <p class="text-sm opacity-50">© 2024 MR.RC DIGITAL ARCHIVE.</p>
+            <div class="flex space-x-6">
+                <i data-lucide="twitter" size="20"></i>
+                <i data-lucide="instagram" size="20"></i>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Icons
+        lucide.createIcons();
+
+        // Theme Toggle
+        const themeToggle = document.getElementById('theme-toggle');
+        const moonIcon = document.getElementById('moon-icon');
+        const sunIcon = document.getElementById('sun-icon');
+        
+        themeToggle.addEventListener('click', () => {
+            document.documentElement.classList.toggle('dark');
+            const isDark = document.documentElement.classList.contains('dark');
+            moonIcon.classList.toggle('hidden', isDark);
+            sunIcon.classList.toggle('hidden', !isDark);
+        });
+
+        // Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('glass', 'py-3', 'shadow-lg');
+                nav.classList.remove('py-6');
+            } else {
+                nav.classList.remove('glass', 'py-3', 'shadow-lg');
+                nav.classList.add('py-6');
+            }
+        });
+
+        // Mobile Menu Logic
+        const menuBtn = document.getElementById('menu-btn');
+        const closeMenu = document.getElementById('close-menu');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        menuBtn.addEventListener('click', () => {
+            mobileMenu.classList.remove('-translate-y-full');
+        });
+        closeMenu.addEventListener('click', () => {
+            mobileMenu.classList.add('-translate-y-full');
+        });
+        mobileMenu.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => mobileMenu.classList.add('-translate-y-full'));
+        });
+
+        // Scroll Reveal Animation
+        const observerOptions = { threshold: 0.1 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+        // GSAP Hero Animation
+        gsap.from(".hero-content > *", {
+            y: 50,
+            opacity: 0,
+            duration: 1,
+            stagger: 0.2,
+            ease: "power3.out"
+        });
+        gsap.from(".hero-image", {
+            scale: 0.8,
+            opacity: 0,
+            duration: 1.5,
+            ease: "expo.out"
+        });
+    </script>
+</body>
+</html>
